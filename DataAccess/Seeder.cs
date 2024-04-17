@@ -6,6 +6,7 @@ namespace DataAccess;
 public class Seeder
 {
     private IRepository<IProduct> ProductRepository;
+    private IRepository<ITenantWhitelist> TenantWhitelistRepository;
     private IRepository<ITenant> TenantRepository;
     private IRepository<IClient> ClientRepository;
     private IRepository<IClientWhitelist> ClientWhitelistRepository;
@@ -14,6 +15,7 @@ public class Seeder
     {
         using var scope = serviceProvider.CreateScope();
         ProductRepository = scope.ServiceProvider.GetRequiredService<IRepository<IProduct>>();
+        TenantWhitelistRepository = scope.ServiceProvider.GetRequiredService<IRepository<ITenantWhitelist>>();
         TenantRepository = scope.ServiceProvider.GetRequiredService<IRepository<ITenant>>();
         ClientRepository = scope.ServiceProvider.GetRequiredService<IRepository<IClient>>();
         ClientWhitelistRepository = scope.ServiceProvider.GetRequiredService<IRepository<IClientWhitelist>>();
@@ -22,6 +24,7 @@ public class Seeder
     public async Task SeedDataAsync()
     {
         await SeedProductsAsync();
+        await SeedTenantsWhitelistAsync();
         await SeedTenantsAsync();
         await SeedClientsAsync();
         await SeedClientWhitelistAsync();
@@ -30,11 +33,11 @@ public class Seeder
     private async Task SeedProductsAsync()
     {
         var products = new List<IProduct>
-            {
-                new Product { Id = 1, ProductCode = "ProductA" },
-                new Product { Id = 2, ProductCode = "ProductB" },
-                new Product { Id = 3, ProductCode = "ProductC" },
-            };
+        {
+            new Product { Id = 1, ProductCode = "ProductA" },
+            new Product { Id = 2, ProductCode = "ProductB" },
+            new Product { Id = 3, ProductCode = "ProductC" },
+        };
 
         foreach (var product in products)
         {
@@ -45,18 +48,33 @@ public class Seeder
     private async Task SeedTenantsAsync()
     {
         var tenants = new List<ITenant>
-            {
-                new Tenant { Id = 0, IsWhitelisted = false },
-                new Tenant { Id = 1, IsWhitelisted = true },
-                new Tenant { Id = 2, IsWhitelisted = false },
-                new Tenant { Id = 3, IsWhitelisted = true },
-                new Tenant { Id = 4, IsWhitelisted = false },
-                new Tenant { Id = 5, IsWhitelisted = true },
-            };
+        {
+            new Tenant { Id = 0, Name = "Sunflower Apartments" },
+            new Tenant { Id = 1, Name = "Evergreen Estates" },
+            new Tenant { Id = 2, Name = "Golden Gate Offices" },
+            new Tenant { Id = 3, Name = "Blue Sky Suites" },
+            new Tenant { Id = 4, Name = "Meadowview Condos" },
+            new Tenant { Id = 5, Name = "Oakwood Residences" },
+        };
 
         foreach (var tenant in tenants)
         {
             await TenantRepository.AddAsync(tenant);
+        }
+    }
+
+    private async Task SeedTenantsWhitelistAsync()
+    {
+        var whitelists = new List<ITenantWhitelist>
+        {
+            new TenantWhitelist { Id = 0, TenantId = 1 },
+            new TenantWhitelist { Id = 0, TenantId = 3 },
+            new TenantWhitelist { Id = 0, TenantId = 5 },
+        };
+
+        foreach (var whitelist in whitelists)
+        {
+            await TenantWhitelistRepository.AddAsync(whitelist);
         }
     }
 

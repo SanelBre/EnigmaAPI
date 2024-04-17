@@ -11,14 +11,17 @@ public class DocumentController : ControllerBase
 {
     private readonly IProductService ProductService;
     private readonly IClientService ClientService;
-    
+    private readonly ITenantService TenantService;
+
 
     public DocumentController(
         IProductService productService,
-        IClientService clientService)
+        IClientService clientService,
+        ITenantService tenantService)
     {
         ProductService = productService;
         ClientService = clientService;
+        TenantService = tenantService;
     }
 
     [HttpPost]
@@ -28,7 +31,9 @@ public class DocumentController : ControllerBase
 
         if (!isSupported) throw new ForbiddenException("Access is forbidden");
 
-        var clientData = await ClientService.GetWhitelistedClientDataAsync((int)request.TenantId, request.DocumentId);
+        var tenantData = await TenantService.GetWhitelistedTenantAsync((int)request.TenantId);
+
+        var clientData = await ClientService.GetWhitelistedClientDataAsync(tenantData.Id, request.DocumentId);
 
         var response = new ResponseModel
         {

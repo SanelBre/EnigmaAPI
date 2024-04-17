@@ -1,5 +1,3 @@
-using Entities;
-
 namespace Services;
 
 public interface IClientWhitelistService
