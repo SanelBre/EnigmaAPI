@@ -30,6 +30,16 @@ public class ExceptionMiddleware
             });
             await context.Response.WriteAsync(responseJson);
         }
+        catch (NotFoundException ex)
+        {
+            context.Response.StatusCode = (int)HttpStatusCode.NotFound;
+            context.Response.ContentType = "application/json";
+            var responseJson = JsonSerializer.Serialize(new
+            {
+                error = ex.Message ?? "Not Found!"
+            });
+            await context.Response.WriteAsync(responseJson);
+        }
         catch (Exception ex)
         {
             context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;

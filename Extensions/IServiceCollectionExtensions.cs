@@ -19,6 +19,7 @@ namespace Extensions
             services.AddRepository<IProduct>();
             services.AddRepository<ITenant>();
             services.AddRepository<IClient>();
+            services.AddRepository<IClientWhitelist>();
 
             return services;
         }
@@ -26,6 +27,8 @@ namespace Extensions
         public static IServiceCollection AddServices(this IServiceCollection services)
         {
             services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<IClientWhitelistService, ClientWhitelistService>();
+            services.AddScoped<IClientService, ClientService>();
 
             return services;
         }

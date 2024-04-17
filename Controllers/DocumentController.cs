@@ -10,23 +10,25 @@ namespace API;
 public class DocumentController : ControllerBase
 {
     private readonly IProductService ProductService;
+    private readonly IClientService ClientService;
+    
 
-    public DocumentController(IProductService productService)
+    public DocumentController(
+        IProductService productService,
+        IClientService clientService)
     {
         ProductService = productService;
+        ClientService = clientService;
     }
 
     [HttpPost]
     public async Task<IActionResult> Anonymize([FromBody] RequestModel request)
     {
-        if (!ModelState.IsValid)
-        {
-            return BadRequest(ModelState);
-        }
-
         var isSupported = await ProductService.IsProductSupportedAsync(request.ProductCode);
 
         if (!isSupported) throw new ForbiddenException("Access is forbidden");
+
+        var clientData = await ClientService.GetWhitelistedClientDataAsync((int)request.TenantId, request.DocumentId);
 
         var response = new ResponseModel
         {

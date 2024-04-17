@@ -14,5 +14,5 @@ public class RequestModel
     public int? TenantId { get; set; }
 
     [Required]
-    public int? DocumentId { get; set; }
+    public string DocumentId { get; set; }
 }

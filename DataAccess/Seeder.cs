@@ -8,6 +8,7 @@ public class Seeder
     private IRepository<IProduct> ProductRepository;
     private IRepository<ITenant> TenantRepository;
     private IRepository<IClient> ClientRepository;
+    private IRepository<IClientWhitelist> ClientWhitelistRepository;
 
     public Seeder(IServiceProvider serviceProvider)
     {
@@ -15,6 +16,7 @@ public class Seeder
         ProductRepository = scope.ServiceProvider.GetRequiredService<IRepository<IProduct>>();
         TenantRepository = scope.ServiceProvider.GetRequiredService<IRepository<ITenant>>();
         ClientRepository = scope.ServiceProvider.GetRequiredService<IRepository<IClient>>();
+        ClientWhitelistRepository = scope.ServiceProvider.GetRequiredService<IRepository<IClientWhitelist>>();
     }
 
     public async Task SeedDataAsync()
@@ -22,6 +24,7 @@ public class Seeder
         await SeedProductsAsync();
         await SeedTenantsAsync();
         await SeedClientsAsync();
+        await SeedClientWhitelistAsync();
     }
 
     private async Task SeedProductsAsync()
@@ -60,62 +63,71 @@ public class Seeder
     private async Task SeedClientsAsync()
     {
         var clients = new List<IClient>
+        {
+            new Client
             {
-                new Client
-                {
-                    Id = 0,
-                    VAT = "001t",
-                    IsWhitelisted = true,
-                    CompanyType = CompanyType.Small,
-                    DocumentId = "document_id_1",
-                    RegisterNumber = 1000,
-                    TenantId = (await TenantRepository.GetAllAsync()).Single(t => t.Id == 1).Id
-                },
-                new Client
-                {
-                    Id = 1,
-                    VAT = "002t",
-                    IsWhitelisted = true,
-                    CompanyType = CompanyType.Medium,
-                    DocumentId = "document_id_2",
-                    RegisterNumber = 2000,
-                    TenantId = (await TenantRepository.GetAllAsync()).Single(t => t.Id == 3).Id
-                },
-                new Client
-                {
-                    Id = 2,
-                    VAT = "003t",
-                    IsWhitelisted = true,
-                    CompanyType = CompanyType.Medium,
-                    DocumentId = null,
-                    RegisterNumber = 3000,
-                    TenantId = (await TenantRepository.GetAllAsync()).Single(t => t.Id == 3).Id
-                },
-                new Client
-                {
-                    Id = 3,
-                    VAT = "004t",
-                    IsWhitelisted = false,
-                    CompanyType = CompanyType.Large,
-                    DocumentId = "document_id_3",
-                    RegisterNumber = 4000,
-                    TenantId = (await TenantRepository.GetAllAsync()).Single(t => t.Id == 5).Id
-                },
-                new Client
-                {
-                    Id = 4,
-                    VAT = "005t",
-                    IsWhitelisted = false,
-                    CompanyType = CompanyType.Large,
-                    DocumentId = null,
-                    RegisterNumber = 5000,
-                    TenantId = (await TenantRepository.GetAllAsync()).Single(t => t.Id == 0).Id
-                },
-            };
+                Id = 0,
+                VAT = "001t",
+                CompanyType = CompanyType.Small,
+                DocumentId = "document_id_1",
+                RegisterNumber = 1000,
+                TenantId = 1
+            },
+            new Client
+            {
+                Id = 1,
+                VAT = "002t",
+                CompanyType = CompanyType.Medium,
+                DocumentId = "document_id_2",
+                RegisterNumber = 2000,
+                TenantId = 3
+            },
+            new Client
+            {
+                Id = 2,
+                VAT = "003t",
+                CompanyType = CompanyType.Medium,
+                DocumentId = null,
+                RegisterNumber = 3000,
+                TenantId = 3
+            },
+            new Client
+            {
+                Id = 3,
+                VAT = "004t",
+                CompanyType = CompanyType.Large,
+                DocumentId = "document_id_3",
+                RegisterNumber = 4000,
+                TenantId = 5
+            },
+            new Client
+            {
+                Id = 4,
+                VAT = "005t",
+                CompanyType = CompanyType.Large,
+                DocumentId = null,
+                RegisterNumber = 5000,
+                TenantId = 0
+            },
+        };
 
         foreach (var client in clients)
         {
             await ClientRepository.AddAsync(client);
+        }
+    }
+
+    private async Task SeedClientWhitelistAsync()
+    {
+        var clientWhitelists = new List<IClientWhitelist>
+        {
+            new ClientWhitelist { Id = 0, ClientId = 1, TenantId = 3 },
+            new ClientWhitelist { Id = 0, ClientId = 3, TenantId = 2 },
+        };
+
+        foreach (var whitelist in clientWhitelists)
+        {
+            await ClientWhitelistRepository.AddAsync(whitelist);
         }
     }
 }

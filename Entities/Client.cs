@@ -4,7 +4,6 @@ public class Client : IClient
 {
     public int Id { get; set; }
     public string VAT { get; set; }
-    public bool IsWhitelisted { get; set; }
     public CompanyType CompanyType { get; set; }
     public string DocumentId { get; set; }
     public int RegisterNumber { get; set; }
