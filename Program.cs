@@ -1,4 +1,4 @@
-using Extensions;
+using Utils.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -6,9 +6,9 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
 
-builder.Services.AddRepository
-
 var app = builder.Build();
+
+app.UseMiddleware<ExceptionMiddleware>();
 
 if (app.Environment.IsDevelopment())
 {
