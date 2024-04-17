@@ -2,9 +2,11 @@ namespace DataAccess;
 
 public interface IRepository<T>
 {
-    Task<IEnumerable<T>> GetAllAsync();
-    Task<T> GetByIdAsync(int id);
-    Task AddAsync(T entity);
-    Task UpdateAsync(T entity);
-    Task DeleteAsync(int id);
+    public Task<IEnumerable<T>> GetAllAsync();
+    public Task<T> GetByIdAsync(int id);
+    public Task<IEnumerable<T>> GetAllWhereAsync(Func<T, bool> predicate);
+    public Task<T> GetWhereAsync(Func<T, bool> predicate);
+    public Task AddAsync(T entity);
+    public Task UpdateAsync(T entity);
+    public Task DeleteAsync(int id);
 }

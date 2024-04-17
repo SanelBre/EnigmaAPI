@@ -1,10 +1,16 @@
+using DataAccess;
+using Extensions;
 using Utils.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddJsonOptions(options => options.JsonSerializerOptions.PropertyNameCaseInsensitive = false);
+builder.Services.AddRepositories();
+builder.Services.AddServices();
+
+builder.Services.AddSingleton<Seeder>();
 
 var app = builder.Build();
 
@@ -17,7 +23,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
 app.MapControllers();
+
+await app.Services.SeedDataAsync();
 
 app.Run();

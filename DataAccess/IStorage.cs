@@ -2,9 +2,10 @@ namespace DataAccess;
 
 public interface IDataStorage<T>
 {
-    Task<IEnumerable<T>> GetAllAsync();
-    Task<T> GetByIdAsync(int id);
-    Task AddAsync(T entity);
-    Task UpdateAsync(T entity);
-    Task DeleteAsync(int id);
+    public Task<IEnumerable<T>> GetAllAsync();
+    public Task<IEnumerable<T>> GetAllAsync(Func<T, bool> predicate);
+    public Task<T> GetAsync(Func<T, bool> predicate);
+    public Task AddAsync(T entity);
+    public Task UpdateAsync(T entity);
+    public Task DeleteAsync(int id);
 }

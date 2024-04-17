@@ -1,7 +1,19 @@
 namespace Entities;
 
-public class Client
+public class Client : IClient
 {
-    public Guid ClientId { get; set; }
-    public string ClientVAT { get; set; }
+    public int Id { get; set; }
+    public string VAT { get; set; }
+    public bool IsWhitelisted { get; set; }
+    public CompanyType CompanyType { get; set; }
+    public string DocumentId { get; set; }
+    public int RegisterNumber { get; set; }
+    public int TenantId { get; set; }
+}
+
+public enum CompanyType
+{
+    Small,
+    Medium,
+    Large
 }
