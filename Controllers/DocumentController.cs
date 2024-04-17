@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using Entities;
+using Services;
+using Utils.Exceptions;
 
 namespace API;
 
@@ -9,14 +9,24 @@ namespace API;
 [Route("[controller]")]
 public class DocumentController : ControllerBase
 {
+    private readonly IProductService ProductService;
 
-    [HttpPost("anonymize")]
-    public IActionResult Anonymize([FromBody]RequestModel request)
+    public DocumentController(IProductService productService)
+    {
+        ProductService = productService;
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Anonymize([FromBody] RequestModel request)
     {
         if (!ModelState.IsValid)
         {
             return BadRequest(ModelState);
         }
+
+        var isSupported = await ProductService.IsProductSupportedAsync(request.ProductCode);
+
+        if (!isSupported) throw new ForbiddenException("Access is forbidden");
 
         var response = new ResponseModel
         {

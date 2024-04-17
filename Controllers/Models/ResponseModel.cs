@@ -1,3 +1,5 @@
+using Entities;
+
 namespace API;
 
 public class ResponseModel
@@ -12,9 +14,3 @@ public class CompanyModel
     public CompanyType CompanyType { get; set; }
 }
 
-public enum CompanyType
-{
-    Small,
-    Medium,
-    Large
-}
