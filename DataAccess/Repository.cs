@@ -1,6 +1,8 @@
+using Entities;
+
 namespace DataAccess;
 
-public class Repository<T> : IRepository<T>
+public class Repository<T> : IRepository<T> where T : IEntity
 {
     private readonly IDataStorage<T> _dataStorage;
 
@@ -16,7 +18,17 @@ public class Repository<T> : IRepository<T>
 
     public Task<T> GetByIdAsync(int id)
     {
-        return _dataStorage.GetByIdAsync(id);
+        return _dataStorage.GetAsync(d => d.Id == id);
+    }
+
+    public Task<IEnumerable<T>> GetAllWhereAsync(Func<T, bool> predicate)
+    {
+        return _dataStorage.GetAllAsync(predicate);
+    }
+
+    public Task<T> GetWhereAsync(Func<T, bool> predicate)
+    {
+        return _dataStorage.GetAsync(predicate);
     }
 
     public Task AddAsync(T entity)
