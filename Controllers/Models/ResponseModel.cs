@@ -10,7 +10,7 @@ public class ResponseModel
 
 public class CompanyModel
 {
-    public string RegistrationNumber { get; set; }
-    public CompanyType CompanyType { get; set; }
+    public int RegistrationNumber { get; set; }
+    public string CompanyType { get; set; }
 }
 

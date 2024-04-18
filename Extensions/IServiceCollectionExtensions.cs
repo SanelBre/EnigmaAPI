@@ -1,4 +1,5 @@
 using DataAccess;
+using EnigmaAPI.Services;
 using Entities;
 using Services;
 
@@ -21,6 +22,7 @@ namespace Extensions
             services.AddRepository<ITenant>();
             services.AddRepository<IClient>();
             services.AddRepository<IClientWhitelist>();
+            services.AddRepository<ICompany>();
 
             return services;
         }
@@ -32,6 +34,7 @@ namespace Extensions
             services.AddScoped<ITenantService, TenantService>();
             services.AddScoped<IClientWhitelistService, ClientWhitelistService>();
             services.AddScoped<IClientService, ClientService>();
+            services.AddScoped<ICompanyService, CompanyService>();
 
             return services;
         }

@@ -10,6 +10,7 @@ public class Seeder
     private IRepository<ITenant> TenantRepository;
     private IRepository<IClient> ClientRepository;
     private IRepository<IClientWhitelist> ClientWhitelistRepository;
+    private IRepository<ICompany> CompanyRepository;
 
     public Seeder(IServiceProvider serviceProvider)
     {
@@ -19,6 +20,7 @@ public class Seeder
         TenantRepository = scope.ServiceProvider.GetRequiredService<IRepository<ITenant>>();
         ClientRepository = scope.ServiceProvider.GetRequiredService<IRepository<IClient>>();
         ClientWhitelistRepository = scope.ServiceProvider.GetRequiredService<IRepository<IClientWhitelist>>();
+        CompanyRepository = scope.ServiceProvider.GetRequiredService<IRepository<ICompany>>();
     }
 
     public async Task SeedDataAsync()
@@ -28,6 +30,7 @@ public class Seeder
         await SeedTenantsAsync();
         await SeedClientsAsync();
         await SeedClientWhitelistAsync();
+        await SeedCompaniesAsync();
     }
 
     private async Task SeedProductsAsync()
@@ -39,8 +42,10 @@ public class Seeder
             new Product { Id = 3, ProductCode = "ProductC" },
         };
 
+        int idCounter = 0;
         foreach (var product in products)
         {
+            product.Id = idCounter++;
             await ProductRepository.AddAsync(product);
         }
     }
@@ -49,16 +54,18 @@ public class Seeder
     {
         var tenants = new List<ITenant>
         {
-            new Tenant { Id = 0, Name = "Sunflower Apartments" },
-            new Tenant { Id = 1, Name = "Evergreen Estates" },
-            new Tenant { Id = 2, Name = "Golden Gate Offices" },
-            new Tenant { Id = 3, Name = "Blue Sky Suites" },
-            new Tenant { Id = 4, Name = "Meadowview Condos" },
-            new Tenant { Id = 5, Name = "Oakwood Residences" },
+            new Tenant { Name = "Sunflower Apartments" },
+            new Tenant { Name = "Evergreen Estates" },
+            new Tenant { Name = "Golden Gate Offices" },
+            new Tenant { Name = "Blue Sky Suites" },
+            new Tenant { Name = "Meadowview Condos" },
+            new Tenant { Name = "Oakwood Residences" },
         };
 
+        int idCounter = 0;
         foreach (var tenant in tenants)
         {
+            tenant.Id = idCounter++;
             await TenantRepository.AddAsync(tenant);
         }
     }
@@ -67,13 +74,15 @@ public class Seeder
     {
         var whitelists = new List<ITenantWhitelist>
         {
-            new TenantWhitelist { Id = 0, TenantId = 1 },
-            new TenantWhitelist { Id = 0, TenantId = 3 },
-            new TenantWhitelist { Id = 0, TenantId = 5 },
+            new TenantWhitelist { TenantId = 1 },
+            new TenantWhitelist { TenantId = 3 },
+            new TenantWhitelist { TenantId = 5 },
         };
 
+        int idCounter = 0;
         foreach (var whitelist in whitelists)
         {
+            whitelist.Id = idCounter++;
             await TenantWhitelistRepository.AddAsync(whitelist);
         }
     }
@@ -84,53 +93,40 @@ public class Seeder
         {
             new Client
             {
-                Id = 0,
                 VAT = "001t",
-                CompanyType = CompanyType.Small,
-                DocumentId = "document_id_1",
-                RegisterNumber = 1000,
+                DocumentId = "document_1",
                 TenantId = 1
             },
             new Client
             {
-                Id = 1,
                 VAT = "002t",
-                CompanyType = CompanyType.Medium,
-                DocumentId = "document_id_2",
-                RegisterNumber = 2000,
+                DocumentId = "document_2",
                 TenantId = 3
             },
             new Client
             {
-                Id = 2,
                 VAT = "003t",
-                CompanyType = CompanyType.Medium,
                 DocumentId = null,
-                RegisterNumber = 3000,
                 TenantId = 3
             },
             new Client
             {
-                Id = 3,
                 VAT = "004t",
-                CompanyType = CompanyType.Large,
-                DocumentId = "document_id_3",
-                RegisterNumber = 4000,
+                DocumentId = "document_3",
                 TenantId = 5
             },
             new Client
             {
-                Id = 4,
                 VAT = "005t",
-                CompanyType = CompanyType.Large,
                 DocumentId = null,
-                RegisterNumber = 5000,
                 TenantId = 0
             },
         };
 
+        int idCounter = 0;
         foreach (var client in clients)
         {
+            client.Id = idCounter++;
             await ClientRepository.AddAsync(client);
         }
     }
@@ -139,13 +135,34 @@ public class Seeder
     {
         var clientWhitelists = new List<IClientWhitelist>
         {
-            new ClientWhitelist { Id = 0, ClientId = 1, TenantId = 3 },
-            new ClientWhitelist { Id = 0, ClientId = 3, TenantId = 2 },
+            new ClientWhitelist { ClientId = 1, TenantId = 3 },
+            new ClientWhitelist { ClientId = 3, TenantId = 2 },
         };
 
+        int idCounter = 0;
         foreach (var whitelist in clientWhitelists)
         {
+            whitelist.Id = idCounter++;
             await ClientWhitelistRepository.AddAsync(whitelist);
+        }
+    }
+
+    private async Task SeedCompaniesAsync()
+    {
+        var companies = new List<ICompany>
+        {
+            new Company { VAT = "001t", CompanyType = CompanyType.Small },
+            new Company { VAT = "002t", CompanyType = CompanyType.Medium },
+            new Company { VAT = "003t", CompanyType = CompanyType.Large },
+            new Company { VAT = "004t", CompanyType = CompanyType.Large },
+            new Company { VAT = "005t", CompanyType = CompanyType.Medium },
+        };
+
+        int idCounter = 0;
+        foreach (var company in companies)
+        {
+            company.Id = idCounter++;
+            await CompanyRepository.AddAsync(company);
         }
     }
 }
