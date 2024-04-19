@@ -25,7 +25,7 @@ public class DocumentService : IDocumentService
     public async Task<Guid> GetClientIdAsync(Guid tenantId, Guid documentId)
     {
         var doc = await DocumentRepo.GetWhereAsync(d => d.Id == documentId && d.TenantId == tenantId)
-            ?? throw new NotFoundException($"Document for the given tenantId (${tenantId.ToString()}) and documentId (${documentId.ToString()})");
+            ?? throw new NotFoundException($"Document for the given tenantId (${tenantId.ToString()}) and documentId (${documentId.ToString()}) not found!");
 
         return doc.ClientId;
     }
@@ -38,7 +38,7 @@ public class DocumentService : IDocumentService
     public async Task<string> GetDocumentContentAsync(Guid tenantId, Guid documentId)
     {
         var doc = await DocumentRepo.GetWhereAsync(d => d.Id == documentId && d.TenantId == tenantId)
-            ?? throw new NotFoundException($"Document for the given tenantId (${tenantId.ToString()}) and documentId (${documentId.ToString()})");
+            ?? throw new NotFoundException($"Document for the given tenantId (${tenantId.ToString()}) and documentId (${documentId.ToString()} not found!");
 
         var projectDirectory = Directory.GetCurrentDirectory();
 
