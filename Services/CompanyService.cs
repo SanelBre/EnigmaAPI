@@ -1,6 +1,6 @@
-using DataAccess;
-using Entities;
-using Utils.Exceptions;
+using EnigmaAPI.DataAccess;
+using EnigmaAPI.Entities;
+using EnigmaAPI.Utils.Exceptions;
 
 namespace EnigmaAPI.Services;
 

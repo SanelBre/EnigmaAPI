@@ -1,4 +1,4 @@
-namespace Services;
+namespace EnigmaAPI.Services;
 
 public interface IProductService
 {

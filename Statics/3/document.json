@@ -1,0 +1,38 @@
+{
+	"account_number": "12345678",
+	"balance": 53129.75,
+	"currency": "USD",
+	"owner": {
+		"name": "Alice Smith",
+		"email": "alice.smith@example.com",
+		"address": {
+			"street": "456 Elm Street",
+			"city": "Somewhere",
+			"postal_code": "54321",
+			"country": "United States"
+		}
+	},
+	"transactions": [
+		{
+			"transaction_id": "9876",
+			"amount": 221.35,
+			"date": "2022-03-15",
+			"description": "Online shopping",
+			"category": "Shopping"
+		},
+		{
+			"transaction_id": "6543",
+			"amount": -54.2,
+			"date": "2022-03-20",
+			"description": "Dinner with friends",
+			"category": "Entertainment"
+		},
+		{
+			"transaction_id": "3210",
+			"amount": -102.5,
+			"date": "2022-03-25",
+			"description": "Electricity bill",
+			"category": "Utilities"
+		}
+	]
+}

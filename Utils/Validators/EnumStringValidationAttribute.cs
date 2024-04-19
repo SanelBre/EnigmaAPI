@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Utils.Validators;
+namespace EnigmaAPI.Utils.Validators;
 
 public class EnumStringValidationAttribute : ValidationAttribute
 {

@@ -1,9 +1,8 @@
-using DataAccess;
+using EnigmaAPI.DataAccess;
 using EnigmaAPI.Services;
-using Entities;
-using Services;
+using EnigmaAPI.Entities;
 
-namespace Extensions
+namespace EnigmaAPI.Extensions
 {
     public static class IServiceCollectionExtensions
     {
@@ -18,6 +17,7 @@ namespace Extensions
         public static IServiceCollection AddRepositories(this IServiceCollection services)
         {
             services.AddRepository<IProduct>();
+            services.AddRepository<IDocument>();
             services.AddRepository<ITenantWhitelist>();
             services.AddRepository<ITenant>();
             services.AddRepository<IClient>();
@@ -30,6 +30,7 @@ namespace Extensions
         public static IServiceCollection AddServices(this IServiceCollection services)
         {
             services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<IDocumentService, DocumentService>();
             services.AddScoped<ITenantWhitelistService, TenantWhitelistService>();
             services.AddScoped<ITenantService, TenantService>();
             services.AddScoped<IClientWhitelistService, ClientWhitelistService>();

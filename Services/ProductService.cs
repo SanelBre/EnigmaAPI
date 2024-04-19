@@ -1,7 +1,7 @@
-using DataAccess;
-using Entities;
+using EnigmaAPI.DataAccess;
+using EnigmaAPI.Entities;
 
-namespace Services;
+namespace EnigmaAPI.Services;
 
 public class ProductService : IProductService
 {

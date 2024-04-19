@@ -1,9 +1,8 @@
-namespace Entities;
+namespace EnigmaAPI.Entities;
 
 public class Client : IClient
 {
-    public int Id { get; set; }
-    public int TenantId { get; set; }
+    public Guid Id { get; set; }
+    public Guid TenantId { get; set; }
     public string VAT { get; set; }
-    public string DocumentId { get; set; }
 }

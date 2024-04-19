@@ -1,4 +1,4 @@
-using Entities;
+using EnigmaAPI.Entities;
 
 namespace EnigmaAPI.Services;
 

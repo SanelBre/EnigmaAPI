@@ -1,4 +1,4 @@
-namespace Entities;
+namespace EnigmaAPI.Entities;
 
 public interface ICompany : IEntity
 {

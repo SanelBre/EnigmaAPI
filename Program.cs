@@ -1,6 +1,6 @@
-using DataAccess;
-using Extensions;
-using Utils.Middlewares;
+using EnigmaAPI.DataAccess;
+using EnigmaAPI.Extensions;
+using EnigmaAPI.Utils.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 

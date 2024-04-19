@@ -1,9 +1,9 @@
 
-using DataAccess;
-using Entities;
-using Utils.Exceptions;
+using EnigmaAPI.DataAccess;
+using EnigmaAPI.Entities;
+using EnigmaAPI.Utils.Exceptions;
 
-namespace Services;
+namespace EnigmaAPI.Services;
 
 public class ClientWhitelistService : IClientWhitelistService
 {
@@ -14,9 +14,14 @@ public class ClientWhitelistService : IClientWhitelistService
         ClientWhitelistRepo = clientWhitelist;
     }
 
-    public async Task ThrowIfNotWhitelisted(int clientId, int tenantId)
+    public async Task ThrowIfNotWhitelisted(string clientId)
     {
-        var whitelistObject = await ClientWhitelistRepo.GetWhereAsync(cw => cw.ClientId == clientId && cw.TenantId == tenantId)
+        await ThrowIfNotWhitelisted(new Guid(clientId));
+    }
+
+    public async Task ThrowIfNotWhitelisted(Guid clientId)
+    {
+        var whitelistObject = await ClientWhitelistRepo.GetWhereAsync(cw => cw.ClientId == clientId)
             ?? throw new ForbiddenException($"Client not whitelisted!");
     }
 }

@@ -1,0 +1,38 @@
+{
+	"account_number": "95867647",
+	"balance": 727312.01,
+	"currency": "EUR",
+	"owner": {
+		"name": "John Doe",
+		"email": "john.doe@example.com",
+		"address": {
+			"street": "123 Main Street",
+			"city": "Anytown",
+			"postal_code": "12345",
+			"country": "Country"
+		}
+	},
+	"transactions": [
+		{
+			"transaction_id": "2913",
+			"amount": 166.95,
+			"date": "2015-04-01",
+			"description": "Grocery shopping",
+			"category": "Food & Dining"
+		},
+		{
+			"transaction_id": "3882",
+			"amount": 6.58,
+			"date": "2016-04-24",
+			"description": "Grocery shopping",
+			"category": "Food & Dining"
+		},
+		{
+			"transaction_id": "1143",
+			"amount": -241.07,
+			"date": "2019-12-25",
+			"description": "Gas station purchase",
+			"category": "Utilities"
+		}
+	]
+}

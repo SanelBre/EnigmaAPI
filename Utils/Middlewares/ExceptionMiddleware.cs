@@ -1,8 +1,8 @@
 using System.Net;
 using System.Text.Json;
-using Utils.Exceptions;
+using EnigmaAPI.Utils.Exceptions;
 
-namespace Utils.Middlewares;
+namespace EnigmaAPI.Utils.Middlewares;
 
 public class ExceptionMiddleware
 {

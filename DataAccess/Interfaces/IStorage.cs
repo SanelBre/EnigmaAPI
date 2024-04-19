@@ -1,4 +1,4 @@
-namespace DataAccess;
+namespace EnigmaAPI.DataAccess;
 
 public interface IDataStorage<T>
 {
@@ -7,5 +7,5 @@ public interface IDataStorage<T>
     public Task<T> GetAsync(Func<T, bool> predicate);
     public Task AddAsync(T entity);
     public Task UpdateAsync(T entity);
-    public Task DeleteAsync(int id);
+    public Task DeleteAsync(string id);
 }

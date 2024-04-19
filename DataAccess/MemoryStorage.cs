@@ -1,10 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Entities;
+using EnigmaAPI.Entities;
 
-namespace DataAccess;
+namespace EnigmaAPI.DataAccess;
 
 public class MemoryStorage<T> : IDataStorage<T> where T : IEntity
 {
@@ -60,11 +56,11 @@ public class MemoryStorage<T> : IDataStorage<T> where T : IEntity
         }
     }
 
-    public Task DeleteAsync(int id)
+    public Task DeleteAsync(string id)
     {
         lock (_lock)
         {
-            var entityToRemove = _data.FirstOrDefault(e => e.Id == id);
+            var entityToRemove = _data.FirstOrDefault(e => e.Id == new Guid(id));
             if (entityToRemove != null)
             {
                 _data.Remove(entityToRemove);

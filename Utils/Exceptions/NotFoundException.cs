@@ -1,4 +1,4 @@
-namespace Utils.Exceptions;
+namespace EnigmaAPI.Utils.Exceptions;
 
 using System;
 

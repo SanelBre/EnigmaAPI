@@ -1,8 +1,8 @@
-using DataAccess;
-using Entities;
-using Utils.Exceptions;
+using EnigmaAPI.DataAccess;
+using EnigmaAPI.Entities;
+using EnigmaAPI.Utils.Exceptions;
 
-namespace Services;
+namespace EnigmaAPI.Services;
 
 public class TenantService : ITenantService
 {
@@ -16,7 +16,12 @@ public class TenantService : ITenantService
         TenantWhitelistService = tenantWhitelistService;
     }
 
-    public async Task<ITenant> GetTenantAsync(int tenantId)
+    public async Task<ITenant> GetTenantAsync(string tenantId)
+    {
+        return await GetTenantAsync(new Guid(tenantId));
+    }
+
+    public async Task<ITenant> GetTenantAsync(Guid tenantId)
     {
         var tenantData = await TenantRepo.GetWhereAsync(c => c.Id == tenantId)
             ?? throw new NotFoundException($"Did not find the tenant for the provided Id ({tenantId})");
@@ -24,7 +29,12 @@ public class TenantService : ITenantService
         return tenantData;
     }
 
-    public async Task<ITenant> GetWhitelistedTenantAsync(int tenantId)
+    public async Task<ITenant> GetWhitelistedTenantAsync(string tenantId)
+    {
+        return await GetWhitelistedTenantAsync(new Guid(tenantId));
+    }
+
+    public async Task<ITenant> GetWhitelistedTenantAsync(Guid tenantId)
     {
         var tenantData = await GetTenantAsync(tenantId);
 

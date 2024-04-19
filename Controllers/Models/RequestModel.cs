@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
-namespace API;
+namespace EnigmaAPI.API;
 
 public class RequestModel
 {
@@ -11,8 +11,9 @@ public class RequestModel
 
     [Required]
     [JsonPropertyName("tenantId")]
-    public int? TenantId { get; set; }
+    public string TenantId { get; set; }
 
     [Required]
+    [JsonPropertyName("documentId")]
     public string DocumentId { get; set; }
 }

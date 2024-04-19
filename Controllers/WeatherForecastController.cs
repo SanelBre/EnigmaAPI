@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace API;
+namespace EnigmaAPI.API;
 
 [ApiController]
 [Route("[controller]")]
@@ -17,7 +17,7 @@ public class WeatherForecastController : ControllerBase
     [HttpGet]
     public WeatherForecast[] Get()
     {
-        var forecast =  Enumerable.Range(1, 5).Select(index =>
+        var forecast = Enumerable.Range(1, 5).Select(index =>
             new WeatherForecast
             (
                 DateOnly.FromDateTime(DateTime.Now.AddDays(index)),

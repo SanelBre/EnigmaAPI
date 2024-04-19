@@ -1,8 +1,8 @@
-using DataAccess;
-using Entities;
-using Utils.Exceptions;
+using EnigmaAPI.DataAccess;
+using EnigmaAPI.Entities;
+using EnigmaAPI.Utils.Exceptions;
 
-namespace Services;
+namespace EnigmaAPI.Services;
 
 public class ClientService : IClientService
 {
@@ -16,19 +16,29 @@ public class ClientService : IClientService
         ClientWhitelistService = clientWhitelistService;
     }
 
-    public async Task<IClient> GetClientDataAsync(int tenantId, string documentId)
+    public async Task<IClient> GetClientDataByIdAsync(string id)
     {
-        var clientData = await ClientRepo.GetWhereAsync(c => c.TenantId == tenantId && c.DocumentId == documentId)
-            ?? throw new NotFoundException($"Did not find the client for the provided tenantId ({tenantId}) and documentId ({documentId})");
+        return await GetClientDataByIdAsync(new Guid(id));
+    }
+
+    public async Task<IClient> GetClientDataByIdAsync(Guid id)
+    {
+        var clientData = await ClientRepo.GetWhereAsync(c => c.Id == id)
+            ?? throw new NotFoundException($"Did not find the client for the given client id ({id.ToString()})");
 
         return clientData;
     }
 
-    public async Task<IClient> GetWhitelistedClientDataAsync(int tenantId, string documentId)
+    public async Task<IClient> GetWhitelistedClientDataByIdAsync(string id)
     {
-        var clientData = await GetClientDataAsync(tenantId, documentId);
+        return await GetWhitelistedClientDataByIdAsync(new Guid(id));
+    }
 
-        await ClientWhitelistService.ThrowIfNotWhitelisted(clientData.Id, tenantId);
+    public async Task<IClient> GetWhitelistedClientDataByIdAsync(Guid id)
+    {
+        var clientData = await GetClientDataByIdAsync(id);
+
+        await ClientWhitelistService.ThrowIfNotWhitelisted(id);
 
         return clientData;
     }

@@ -1,16 +1,16 @@
 using Microsoft.AspNetCore.Mvc;
-using Entities;
-using Services;
-using Utils.Exceptions;
+using EnigmaAPI.Entities;
 using EnigmaAPI.Services;
+using EnigmaAPI.Utils.Exceptions;
 
-namespace API;
+namespace EnigmaAPI.API;
 
 [ApiController]
 [Route("[controller]")]
 public class DocumentController : ControllerBase
 {
     private readonly IProductService ProductService;
+    private readonly IDocumentService DocumentService;
     private readonly IClientService ClientService;
     private readonly ITenantService TenantService;
     private readonly ICompanyService CompanyService;
@@ -18,11 +18,13 @@ public class DocumentController : ControllerBase
 
     public DocumentController(
         IProductService productService,
+        IDocumentService documentService,
         IClientService clientService,
         ICompanyService companyService,
         ITenantService tenantService)
     {
         ProductService = productService;
+        DocumentService = documentService;
         ClientService = clientService;
         TenantService = tenantService;
         CompanyService = companyService;
@@ -33,15 +35,19 @@ public class DocumentController : ControllerBase
     {
         var isSupported = await ProductService.IsProductSupportedAsync(request.ProductCode);
 
-        if (!isSupported) throw new ForbiddenException("Access is forbidden");
+        if (!isSupported)
+            throw new ForbiddenException("Access is forbidden");
 
-        var tenantData = await TenantService.GetWhitelistedTenantAsync((int)request.TenantId);
+        var tenantData = await TenantService.GetWhitelistedTenantAsync(request.TenantId);
 
-        var clientData = await ClientService.GetWhitelistedClientDataAsync(tenantData.Id, request.DocumentId);
+        var clientId = await DocumentService.GetClientIdAsync(tenantData.Id.ToString(), request.DocumentId);
+
+        var clientData = await ClientService.GetWhitelistedClientDataByIdAsync(clientId);
 
         var company = await CompanyService.GetCompanyByVAT(clientData.VAT);
 
-        if (company.CompanyType == CompanyType.Small) throw new ForbiddenException("Small companies not permitted");
+        if (company.CompanyType == CompanyType.Small)
+            throw new ForbiddenException("Small companies not permitted");
 
         var response = new ResponseModel
         {

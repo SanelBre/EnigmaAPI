@@ -1,6 +1,6 @@
-using DataAccess;
+using EnigmaAPI.DataAccess;
 
-namespace Extensions;
+namespace EnigmaAPI.Extensions;
 
 public static class IServiceProviderExtensions
 {

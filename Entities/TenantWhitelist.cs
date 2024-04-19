@@ -1,7 +1,7 @@
-namespace Entities;
+namespace EnigmaAPI.Entities;
 
 public class TenantWhitelist : ITenantWhitelist
 {
-    public int Id { get; set; }
-    public int TenantId { get; set; }
+    public Guid Id { get; set; }
+    public Guid TenantId { get; set; }
 }

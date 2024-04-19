@@ -1,6 +1,6 @@
-using Entities;
+using EnigmaAPI.Entities;
 
-namespace API;
+namespace EnigmaAPI.API;
 
 public class ResponseModel
 {
