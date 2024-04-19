@@ -49,9 +49,11 @@ public class DocumentController : ControllerBase
         if (company.CompanyType == CompanyType.Small)
             throw new ForbiddenException("Small companies not permitted");
 
+        var doc = await DocumentService.GetDocumentContentAsync(tenantData.Id.ToString(), request.DocumentId);
+
         var response = new ResponseModel
         {
-            Data = "serialized and anonymized JSON",
+            Data = doc,
             Company = new CompanyModel
             {
                 RegistrationNumber = company.RegisterNumber,

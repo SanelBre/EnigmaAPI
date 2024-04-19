@@ -123,19 +123,19 @@ public class Samples
                 Id = new Guid("d00669d4-1e24-4c1a-b67d-9a8d5277c8bb"),
                 TenantId = Tenants[1].Id,
                 ClientId = Clients[1].Id,
-                URI = "/static/1/document.json"
+                URI = "/Statics/1/document.json"
             },
             new Document {
                 Id = new Guid("d10669d4-1e24-4c1a-b67d-9a8d5277c8bb"),
                 TenantId = Tenants[3].Id,
                 ClientId = Clients[2].Id,
-                URI = "/static/2/document.json"
+                URI = "/Statics/2/document.json"
             },
             new Document {
                 Id = new Guid("d20669d4-1e24-4c1a-b67d-9a8d5277c8bb"),
                 TenantId = Tenants[5].Id,
                 ClientId = Clients[3].Id,
-                URI = "/static/3/document.json"
+                URI = "/Statics/3/document.json"
             },
         };
 
