@@ -6,4 +6,5 @@ public interface IDocumentService
     public Task<Guid> GetClientIdAsync(Guid tenantId, Guid documentId);
     public Task<string> GetDocumentContentAsync(string tenantId, string documentId);
     public Task<string> GetDocumentContentAsync(Guid tenantId, Guid documentId);
+    public Task<string> AnonymizeDocumentContentBasedOnConfiguration(string content, string productCode);
 }

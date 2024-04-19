@@ -1,17 +1,21 @@
 
+using System.Text.RegularExpressions;
 using EnigmaAPI.DataAccess;
 using EnigmaAPI.Entities;
 using EnigmaAPI.Utils.Exceptions;
+using EnigmaAPI.Extensions;
 
 namespace EnigmaAPI.Services;
 
 public class DocumentService : IDocumentService
 {
     private IRepository<IDocument> DocumentRepo;
+    private IProductService ProductService;
 
-    public DocumentService(IRepository<IDocument> document)
+    public DocumentService(IRepository<IDocument> document, IProductService productService)
     {
         DocumentRepo = document;
+        ProductService = productService;
     }
 
     public async Task<Guid> GetClientIdAsync(string tenantId, string documentId)
@@ -43,6 +47,26 @@ public class DocumentService : IDocumentService
         string jsonContents = File.ReadAllText(documentPath);
 
         return jsonContents;
+    }
+
+    public async Task<string> AnonymizeDocumentContentBasedOnConfiguration(string content, string productCode)
+    {
+        var isValidJSON = content.IsValidJSON();
+
+        if (!isValidJSON) throw new Exception("There is a problem with the document.");
+
+        var fieldConfigurations = await ProductService.GetProductFieldConfigurations(productCode);
+
+        foreach (var field in fieldConfigurations)
+        {
+            string pattern = $"(\"{field.Key}\":\\s*)(\"[^\"]*\"|\"?-?\\d+(\\.\\d+)?\"?)(\\s*)";
+
+            string replacement = $"\"{field.Key}\": \"{field.Value.ToString().AnonymizeByConfig(field.Value)}\"";
+
+            content = Regex.Replace(content, pattern, replacement);
+        }
+
+        return content;
     }
 }
 

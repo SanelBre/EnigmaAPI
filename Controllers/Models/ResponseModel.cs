@@ -1,5 +1,3 @@
-using EnigmaAPI.Entities;
-
 namespace EnigmaAPI.API;
 
 public class ResponseModel

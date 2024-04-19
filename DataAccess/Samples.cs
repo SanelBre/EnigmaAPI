@@ -16,10 +16,26 @@ public class Samples
     {
         var products = new List<IProduct>
         {
-            new Product { Id = new Guid("a01669d4-1e24-4c1a-b67d-9a8d5277c8bb"), ProductCode = "ProductA" },
-            new Product { Id = new Guid("a11669d4-1e24-4c1a-b67d-9a8d5277c8bb"), ProductCode = "ProductB" },
-            new Product { Id = new Guid("a21669d4-1e24-4c1a-b67d-9a8d5277c8bb"), ProductCode = "ProductC" },
+            new Product {
+                Id = Guid.NewGuid(),
+                ProductCode = "ProductA",
+            },
+            new Product {
+                Id = Guid.NewGuid(),
+                ProductCode = "ProductB"
+            },
+            new Product {
+                Id = Guid.NewGuid(),
+                ProductCode = "ProductC"
+            }
         };
+
+        products[0].ProductConfiguration.FieldVisibilities.Add("account_number", FieldVisibilityValues.Hashed);
+        products[1].ProductConfiguration.FieldVisibilities.Add("account_number", FieldVisibilityValues.Hashed);
+        products[1].ProductConfiguration.FieldVisibilities.Add("balance", FieldVisibilityValues.Masked);
+        products[1].ProductConfiguration.FieldVisibilities.Add("amount", FieldVisibilityValues.Masked);
+        products[1].ProductConfiguration.FieldVisibilities.Add("description", FieldVisibilityValues.Hashed);
+        products[1].ProductConfiguration.FieldVisibilities.Add("category", FieldVisibilityValues.Hashed);
 
         return products;
     }
@@ -123,19 +139,19 @@ public class Samples
                 Id = new Guid("d00669d4-1e24-4c1a-b67d-9a8d5277c8bb"),
                 TenantId = Tenants[1].Id,
                 ClientId = Clients[1].Id,
-                URI = "/Statics/1/document.json"
+                URI = "/Statics/1/document.json",
             },
             new Document {
                 Id = new Guid("d10669d4-1e24-4c1a-b67d-9a8d5277c8bb"),
                 TenantId = Tenants[3].Id,
                 ClientId = Clients[2].Id,
-                URI = "/Statics/2/document.json"
+                URI = "/Statics/2/document.json",
             },
             new Document {
                 Id = new Guid("d20669d4-1e24-4c1a-b67d-9a8d5277c8bb"),
                 TenantId = Tenants[5].Id,
                 ClientId = Clients[3].Id,
-                URI = "/Statics/3/document.json"
+                URI = "/Statics/3/document.json",
             },
         };
 

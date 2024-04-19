@@ -51,9 +51,11 @@ public class DocumentController : ControllerBase
 
         var doc = await DocumentService.GetDocumentContentAsync(tenantData.Id.ToString(), request.DocumentId);
 
+        var anonDoc = await DocumentService.AnonymizeDocumentContentBasedOnConfiguration(doc, request.ProductCode);
+
         var response = new ResponseModel
         {
-            Data = doc,
+            Data = anonDoc,
             Company = new CompanyModel
             {
                 RegistrationNumber = company.RegisterNumber,
