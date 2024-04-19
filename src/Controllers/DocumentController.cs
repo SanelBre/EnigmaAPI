@@ -52,7 +52,7 @@ public class DocumentController : ControllerBase
         var isSupported = await ProductService.IsProductSupportedAsync(request.ProductCode);
 
         if (!isSupported)
-            throw new ForbiddenException("Access is forbidden");
+            throw new ForbiddenException("Product is not supported");
 
         var tenantData = await TenantService.GetWhitelistedTenantAsync(request.TenantId);
 
