@@ -30,7 +30,23 @@ public class DocumentController : ControllerBase
         CompanyService = companyService;
     }
 
-    [HttpPost]
+    [HttpGet]
+    public async Task<IActionResult> List()
+    {
+        var res = await DocumentService.ListAllAsync();
+
+        return Ok(res);
+    }
+
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetDocument(string id)
+    {
+        var res = await TenantService.GetTenantAsync(id);
+
+        return Ok(res);
+    }
+
+    [HttpPost("anonymize")]
     public async Task<IActionResult> Anonymize([FromBody] RequestModel request)
     {
         var isSupported = await ProductService.IsProductSupportedAsync(request.ProductCode);

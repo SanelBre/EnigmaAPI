@@ -42,4 +42,11 @@ public class TenantService : ITenantService
 
         return tenantData;
     }
+
+    public async Task<List<ITenant>> ListAllAsync()
+    {
+        var res = await TenantRepo.GetAllWhereAsync(t => t != null);
+
+        return res?.ToList() ?? [];
+    }
 }

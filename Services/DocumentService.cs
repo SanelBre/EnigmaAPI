@@ -68,5 +68,19 @@ public class DocumentService : IDocumentService
 
         return content;
     }
+
+    public async Task<List<IDocument>> ListAllAsync()
+    {
+        var res = await DocumentRepo.GetAllWhereAsync(t => t != null);
+
+        return res?.ToList() ?? [];
+    }
+
+    public async Task<IDocument> GetDocumentAsync(string id)
+    {
+        var res = await DocumentRepo.GetWhereAsync(t => t.Id == new Guid(id));
+
+        return res;
+    }
 }
 
