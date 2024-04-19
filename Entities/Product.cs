@@ -16,6 +16,5 @@ public class Product : IProduct
 {
     public Guid Id { get; set; }
     public string ProductCode { get; set; }
-    public string[] FieldsToHide { get; set; }
     public IProductConfiguration ProductConfiguration { get; set; } = new ProductConfiguration();
 }

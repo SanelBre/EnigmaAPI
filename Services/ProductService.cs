@@ -14,9 +14,23 @@ public class ProductService : IProductService
         ProductRepo = product;
     }
 
-    public async Task<bool> IsProductSupportedAsync(string productCode)
+    public async Task<List<IProduct>> ListAllAsync()
+    {
+        var res = await ProductRepo.GetAllWhereAsync(p => p != null);
+
+        return res?.ToList() ?? [];
+    }
+
+    public async Task<IProduct> GetByProductCodeAsync(string productCode)
     {
         var product = await ProductRepo.GetWhereAsync(p => p.ProductCode == productCode);
+
+        return product;
+    }
+
+    public async Task<bool> IsProductSupportedAsync(string productCode)
+    {
+        var product = await GetByProductCodeAsync(productCode);
 
         return product != null;
     }

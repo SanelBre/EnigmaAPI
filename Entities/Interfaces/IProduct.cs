@@ -3,7 +3,6 @@ namespace EnigmaAPI.Entities;
 public interface IProduct : IEntity
 {
     string ProductCode { get; set; }
-    string[] FieldsToHide { get; set; }
     IProductConfiguration ProductConfiguration { get; set; }
 }
 
